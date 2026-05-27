@@ -3,8 +3,8 @@ import fs from 'fs';
 
    cloudinary.config({ 
         cloud_name:process.env.CLOUDINARY_CLOUD_NAME, 
-        api_key: 'process.env.CLOUDINARY_API_KEY', 
-        api_secret: 'process.env.CLOUDINARY_API_SECRET' // Click 'View API Keys' above to copy your API secret
+        api_key: process.env.CLOUDINARY_API_KEY, 
+        api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
     });
 
     const uploadToCloudinary=async(localfilepath)=>{
@@ -18,8 +18,9 @@ import fs from 'fs';
             console.log("file uploaded to cloudinary",response);
             return response;
         } catch (error) {
-            fs.unlinkSync(localfilepath) //remove the locally saved file as the operation got fai;ed
-            return null;
-        }
+         console.log("Cloudinary Error:", error);
+         fs.unlinkSync(localfilepath);
+          return null;
+}
     }
     export{uploadToCloudinary}
